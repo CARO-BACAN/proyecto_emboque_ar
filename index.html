@@ -74,6 +74,64 @@
             transform: translateX(-50%) scale(0.95);
             background-color: rgba(255, 255, 255, 0.15);
         }
+
+        /* =========================================
+           NUEVO: ESTILOS PARA LA VENTANA EMERGENTE 
+           ========================================= */
+        
+        /* Forzamos que el botón siempre sea visible */
+        model-viewer > #ar-button {
+            display: block !important;
+        }
+
+        /* Contenedor principal oscuro del modal */
+        #ar-modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        /* Caja de contenido minimalista */
+        .modal-contenido {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 380px;
+            text-align: center;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-contenido h3 { margin-top: 0; font-size: 1.2rem; margin-bottom: 15px; }
+        .modal-contenido p { font-size: 0.95rem; color: #bbbbbb; line-height: 1.5; margin-bottom: 20px; }
+        
+        .modal-botones { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        
+        .modal-botones button, .modal-botones a {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        #btn-cerrar { background-color: transparent; color: #ffffff; border: 1px solid #555555; }
+        #btn-cerrar:hover { background-color: #333333; }
+        
+        #btn-alternativo { background-color: #ffffff; color: #111111; }
+        #btn-alternativo:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -95,6 +153,47 @@
         </button>
         
     </model-viewer>
+
+    <div id="ar-modal">
+        <div class="modal-contenido">
+            <h3>¡No te quedes sin la experiencia!</h3>
+            <p>Lamentamos que tu dispositivo no cuente con la tecnología nativa para proyectar este modelo.</p>
+            <p>Pero hemos preparado un visor web alternativo para que sí puedas interactuar con él.</p>
+            <div class="modal-botones">
+                <button id="btn-cerrar">Volver</button>
+                <a href="https://mywebar.com/AQUI_TU_ENLACE" id="btn-alternativo">Ver alternativa</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modelViewer = document.querySelector('model-viewer');
+            const arButton = document.querySelector('#ar-button');
+            const modal = document.getElementById('ar-modal');
+            const btnCerrar = document.getElementById('btn-cerrar');
+
+            // 1. Interceptar el click en el botón "Ver en tu espacio"
+            arButton.addEventListener('click', (event) => {
+                if (!modelViewer.canActivateAR) {
+                    event.preventDefault(); // Evita ir a la Play Store
+                    modal.style.display = 'flex'; // Muestra tu ventana
+                }
+            });
+
+            // 2. Escuchar si la realidad aumentada falla en el intento
+            modelViewer.addEventListener('ar-status', (event) => {
+                if (event.detail.status === 'failed') {
+                    modal.style.display = 'flex'; // Muestra tu ventana
+                }
+            });
+
+            // 3. Cerrar el modal si el usuario presiona "Volver"
+            btnCerrar.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        });
+    </script>
 
 </body>
 </html>
