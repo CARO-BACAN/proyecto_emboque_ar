@@ -24,7 +24,7 @@
         model-viewer { 
             width: 100%; 
             height: 85vh; 
-            --ar-button-display: block; 
+            --ar-button-display: none; 
         }
 
         /* DISEÑO FINAL: Centrado simétrico calibrado y tipografía en negrita */
@@ -168,7 +168,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+       document.addEventListener("DOMContentLoaded", () => {
             const modelViewer = document.querySelector('model-viewer');
             const arButton = document.querySelector('#ar-button');
             const modal = document.getElementById('ar-modal');
@@ -179,6 +179,9 @@
                 if (!modelViewer.canActivateAR) {
                     event.preventDefault(); // Evita ir a la Play Store
                     modal.style.display = 'flex'; // Muestra tu ventana
+                } else {
+                    // LÍNEAS NUEVAS: Si la tecnología sí funciona, abrimos la cámara
+                    modelViewer.activateAR(); 
                 }
             });
 
