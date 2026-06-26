@@ -189,9 +189,11 @@
             });
 
             // 3. Cerrar el modal si el usuario presiona "Volver"
-            btnCerrar.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
+        btnCerrar.addEventListener('click', () => {
+            modal.style.display = 'none';
+
+            // Reactiva el botón de Realidad Aumentada
+            arButton.style.display = 'block';
         });
     </script>
 
