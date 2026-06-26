@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emboque</title>
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: #111111; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: sans-serif; 
+            overflow: hidden; 
+        }
+        
+        /* Ajustado a 85vh para dar espacio de sobra a las barras de Safari y Chrome */
+        model-viewer { 
+            width: 100%; 
+            height: 85vh; 
+            --ar-button-display: block; 
+        }
+
+        /* DISEÑO FINAL: Centrado simétrico calibrado y tipografía en negrita */
+        #ar-button {
+            background-color: rgba(255, 255, 255, 0.08); /* Fondo con 8% de opacidad */
+            backdrop-filter: blur(12px);                 /* Efecto esmerilado para Android */
+            -webkit-backdrop-filter: blur(12px);         /* Efecto esmerilado para iPhone */
+            
+            /* Icono de Realidad Aumentada (reajustado a 18px de la izquierda) */
+            background-image: url(https://modelviewer.dev/assets/ic_view_in_ar_new_googblue_24dp.png);
+            background-repeat: no-repeat;
+            background-position: 18px 50%;
+            background-size: 24px 24px;
+            
+            color: #ffffff;                              /* Texto blanco de alta lectura */
+            font-family: sans-serif;
+            font-size: 16px;
+            
+            /* CORRECCIONES ESTÉTICAS SOLICITADAS: */
+            font-weight: bold;                           /* Texto en negrita para mayor impacto */
+            padding: 0 44px 0 52px;                      /* Nuevos márgenes para equilibrar el eje central */
+            
+            white-space: nowrap;                         /* Prohíbe que "espacio" se vaya abajo */
+            width: auto;                                 /* Permite al botón estirarse a lo ancho */
+            display: inline-block;                       /* Activa el comportamiento flexible */
+            
+            border-radius: 30px;                         /* Bordes completamente ovalados */
+            height: 54px;
+            line-height: 54px;
+            
+            /* Biselado de cristal y sombras de profundidad */
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 
+                        0 0 15px rgba(255, 255, 255, 0.05);
+            
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 60px; /* Lo separa cómodamente de los marcos inferiores */
+            z-index: 999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Feedback visual al pulsar el botón en la pantalla táctil */
+        #ar-button:active {
+            transform: translateX(-50%) scale(0.95);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <model-viewer 
+        src="Emboque_android.glb" 
+        ios-src="Emboque_apple.usdz" 
+        ar 
+        ar-modes="scene-viewer quick-look" 
+        camera-controls 
+        shadow-intensity="1" 
+        environment-image="neutral" 
+        auto-rotate
+        ar-scale="fixed"
+        disable-zoom>
+        
+        <button slot="ar-button" id="ar-button">
+            Ver en tu espacio
+        </button>
+        
+    </model-viewer>
+
+</body>
+</html>
