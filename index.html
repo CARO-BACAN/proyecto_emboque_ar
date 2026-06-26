@@ -100,11 +100,12 @@
 
         /* Caja de contenido minimalista */
         .modal-contenido {
+            box-sizing: border-box; /* NUEVO: Obliga al padding a quedarse adentro */
             background-color: #1a1a1a;
             padding: 30px;
             border-radius: 20px;
-            width: 85%;
-            max-width: 380px;
+            width: 75%; /* AJUSTADO: Un poco menos para dar margen en móviles */
+            max-width: 320px; /* AJUSTADO: Tope más estético para web */
             text-align: center;
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.1);
