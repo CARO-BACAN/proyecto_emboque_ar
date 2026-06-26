@@ -192,8 +192,14 @@
             btnCerrar.addEventListener('click', () => {
     modal.style.display = 'none';
 
-    // Restaurar visibilidad del botón AR de model-viewer
-    modelViewer.style.setProperty('--ar-button-display', 'block');
+    // Reinicia el estado interno de AR
+    modelViewer.setAttribute('ar-modes', 'webxr quick-look');
+
+    // Fuerza una actualización del componente
+    modelViewer.removeAttribute('ar');
+    setTimeout(() => {
+        modelViewer.setAttribute('ar', '');
+    }, 100);
 });
         });
     </script>
